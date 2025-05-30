@@ -1,0 +1,374 @@
+/**
+ * @fileoverview Estilos principais da aplicação de mapa mental
+ * @description Estilos para layout, componentes e interações
+ * @author Sistema de Mapa Mental
+ * @version 1.0.0
+ */
+
+/* ===== RESET E CONFIGURAÇÕES GLOBAIS ===== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tahoma', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #f5f5f5;
+    color: #333;
+    overflow: hidden;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+
+.wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.content {
+    flex: 1;
+    position: relative;
+}
+
+/* ===== SIDEBAR E TOOLBAR ===== */
+
+.sidebar {
+    width: 60px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    align-items: center;
+    height: 100%;
+    gap: 5px;
+}
+
+/* ===== FERRAMENTAS DA TOOLBAR ===== */
+
+.tool {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    position: relative;
+    border: none;
+    background: transparent;
+}
+
+.tool:hover {
+    background-color: #f0f0f0;
+}
+
+.tool:focus {
+    outline: 2px solid #4285f4;
+    outline-offset: 2px;
+}
+
+.tool svg {
+    width: 24px;
+    height: 24px;
+    fill: #4285f4;
+    transition: fill 0.2s ease;
+}
+
+/* Cores específicas para diferentes tipos de ferramentas */
+.tool#delete-node svg {
+    fill: #db4437;
+}
+
+.tool#change-color svg {
+    fill: #f4b400;
+}
+
+.tool#change-shape svg {
+    fill: #9c27b0;
+}
+
+.tool#save-map svg,
+.tool#load-map svg,
+.tool#export-image svg {
+    fill: #0f9d58;
+}
+
+/* ===== BOTÕES DE TEMA E PERSONALIZAÇÃO ===== */
+
+.theme-toggle-btn {
+    margin: 8px 0 0 8px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+    background: #d1d1d1;
+}
+
+.theme-toggle-btn:focus {
+    outline: 2px solid #4285f4;
+    outline-offset: 2px;
+}
+
+/* ===== DIVISORES ===== */
+
+.divider {
+    width: 30px;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 10px 0;
+    align-self: center;
+}
+
+/* ===== CONTAINER DO MAPA MENTAL ===== */
+
+#mind-map-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #ffffff;
+    background-image: 
+        linear-gradient(to right, rgba(200, 200, 200, 0.2) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(200, 200, 200, 0.2) 1px, transparent 1px),
+        linear-gradient(to right, rgba(180, 180, 180, 0.25) 10px, transparent 10px),
+        linear-gradient(to bottom, rgba(180, 180, 180, 0.25) 10px, transparent 10px);
+    background-size: 20px 20px, 20px 20px, 200px 200px, 200px 200px;
+    background-position: center center;
+}
+
+/* Indicador central quando não há nós */
+#mind-map-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px dashed rgba(180, 180, 180, 0.2);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.center-indicator::after {
+    opacity: 1;
+}
+
+.has-nodes::after {
+    opacity: 0;
+}
+
+/* ===== MENSAGEM DE CONTAINER VAZIO ===== */
+
+.empty-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #aaa;
+    font-size: 18px;
+    font-style: italic;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-align: center;
+    z-index: 1;
+}
+
+.empty-container .empty-message {
+    opacity: 1;
+}
+
+/* ===== SUBMENU DE CORES ===== */
+
+.color-submenu {
+    position: absolute;
+    left: 50px;
+    top: -10px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    display: none;
+    flex-wrap: wrap;
+    width: 120px;
+    z-index: 1000;
+}
+
+.color-submenu::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -6px;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid white;
+}
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    margin: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.color-swatch:hover {
+    transform: scale(1.2);
+    border-color: #4285f4;
+}
+
+.color-swatch:focus {
+    outline: 2px solid #4285f4;
+    outline-offset: 2px;
+}
+
+.show-submenu .color-submenu {
+    display: flex;
+}
+
+/* ===== ESTILOS PARA VIS.JS ===== */
+
+/* Tooltips personalizados */
+.vis-tooltip {
+    background-color: #333 !important;
+    color: #fff !important;
+    padding: 8px !important;
+    border-radius: 4px !important;
+    font-family: 'Tahoma', sans-serif !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    font-size: 12px !important;
+    border: none !important;
+    z-index: 10000 !important;
+}
+
+/* Nós selecionados */
+.vis-network .vis-node.vis-selected {
+    box-shadow: 0 0 10px rgba(66, 133, 244, 0.8) !important;
+}
+
+/* Canvas transparente para permitir background customizado */
+.vis-network canvas {
+    background-color: transparent !important;
+}
+
+/* Botões de navegação */
+.vis-navigation {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ===== ESTADOS DE INTERAÇÃO ===== */
+
+/* Estado de loading */
+.loading {
+    cursor: wait;
+}
+
+.loading * {
+    pointer-events: none;
+}
+
+/* Estado de erro */
+.error {
+    border: 2px solid #db4437;
+    background-color: #ffeaea;
+}
+
+/* ===== ACESSIBILIDADE ===== */
+
+/* Foco visível para elementos interativos */
+button:focus,
+.tool:focus,
+[tabindex]:focus {
+    outline: 2px solid #4285f4;
+    outline-offset: 2px;
+}
+
+/* Reduzir movimento para usuários sensíveis */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 50px;
+    }
+    
+    .tool {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .tool svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .theme-toggle-btn {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .empty-message {
+        font-size: 16px;
+        padding: 0 20px;
+    }
+}
+
+/* ===== UTILITÁRIOS ===== */
+
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

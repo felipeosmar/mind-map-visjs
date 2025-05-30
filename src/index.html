@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Meta tags básicas -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicação interativa para criação e edição de mapas mentais com interface moderna e recursos avançados">
+    <meta name="keywords" content="mapa mental, mind map, organizacao, brainstorming, visualizacao">
+    <meta name="author" content="Sistema de Mapa Mental">
+    
+    <!-- Título da página -->
+    <title>Mapa Mental Interativo - Organize suas ideias</title>
+    
+    <!-- Favicon (adicione seu favicon aqui) -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Meta tags para redes sociais (Open Graph) -->
+    <meta property="og:title" content="Mapa Mental Interativo">
+    <meta property="og:description" content="Crie e edite mapas mentais de forma interativa">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://seudominio.com">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    
+    <!-- Preload da biblioteca vis.js para melhor performance -->
+    <link rel="preload" href="lib/vis-network.min.js" as="script">
+    
+    <!-- Scripts críticos carregados de forma assíncrona -->
+    <script src="lib/vis-network.min.js" defer></script>
+    <script type="module" src="js/main.js" defer></script>
+    <script src="js/ui.js" defer></script>
+</head>
+<body>
+    <!-- Container principal da aplicação -->
+    <div class="wrapper" role="main">
+        
+        <!-- Sidebar com ferramentas -->
+        <aside class="sidebar" role="complementary" aria-label="Ferramentas do mapa mental">
+            <nav class="toolbar" role="toolbar" aria-label="Barra de ferramentas">
+                
+                <!-- Controles de tema e personalização -->
+                <section class="theme-controls" aria-label="Controles de aparência">
+                    <button 
+                        class="theme-toggle-btn" 
+                        id="theme-toggle" 
+                        title="Alternar entre tema claro e escuro"
+                        aria-label="Alternar tema"
+                        type="button">
+                        🌙/☀️
+                    </button>
+                    
+                    <button 
+                        class="theme-toggle-btn" 
+                        id="customize-nodes" 
+                        title="Abrir painel de personalização de nós"
+                        aria-label="Personalizar nós"
+                        type="button">
+                        🎨
+                    </button>
+                </section>
+                
+                <!-- Ferramentas de edição -->
+                <section class="edit-tools" aria-label="Ferramentas de edição">
+                    <button 
+                        class="tool" 
+                        id="add-node" 
+                        title="Adicionar novo nó"
+                        aria-label="Adicionar nó"
+                        type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        class="tool" 
+                        id="edit-node" 
+                        title="Editar nó selecionado"
+                        aria-label="Editar nó"
+                        type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        class="tool" 
+                        id="delete-node" 
+                        title="Remover nó selecionado"
+                        aria-label="Remover nó"
+                        type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                        </svg>
+                    </button>
+                </section>
+                
+                <div class="divider" role="separator" aria-hidden="true"></div>
+                
+                <!-- Ferramentas de aparência -->
+                <section class="appearance-tools" aria-label="Ferramentas de aparência">
+                    <button 
+                        class="tool" 
+                        id="change-color" 
+                        title="Alterar cor do nó selecionado"
+                        aria-label="Alterar cor"
+                        type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3Z" />
+                        </svg>
+                    </button>
+                    
+                    <div class="tool" id="change-shape" title="Alterar forma do nó selecionado">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M11,13.5V21.5H3V13.5H11M12,2L17.5,11H6.5L12,2M17.5,13C20,13 22,15 22,17.5C22,20 20,22 17.5,22C15,22 13,20 13,17.5C13,15 15,13 17.5,13Z" />
+                        </svg>
+                        
+                        <!-- Submenu de formas -->
+                        <div class="shape-submenu" id="shape-submenu" role="menu" aria-label="Opções de forma">
+                            <button class="shape-option" data-shape="square" role="menuitem" aria-label="Quadrado">
+                                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" /></svg>
+                            </button>
+                            <button class="shape-option" data-shape="circle" role="menuitem" aria-label="Círculo">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /></svg>
+                            </button>
+                            <button class="shape-option" data-shape="ellipse" role="menuitem" aria-label="Elipse">
+                                <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="8" /></svg>
+                            </button>
+                            <button class="shape-option" data-shape="diamond" role="menuitem" aria-label="Losango">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="12,2 22,12 12,22 2,12" />
+                                </svg>
+                            </button>
+                            <button class="shape-option" data-shape="triangle" role="menuitem" aria-label="Triângulo">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="12,4 20,20 4,20" />
+                                </svg>
+                            </button>
+                            <button class="shape-option" data-shape="box" role="menuitem" aria-label="Retângulo">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="4" y="6" width="16" height="12" rx="2" />
+                                </svg>
+                            </button>
+                            <button class="shape-option" data-shape="star" role="menuitem" aria-label="Estrela">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="12,2 15.5,9 22,9.5 17,14 18.5,21 12,17.5 5.5,21 7,14 2,9.5 8.5,9" />
+                                </svg>
+                            </button>
+                            <button class="shape-option" data-shape="arrow" role="menuitem" aria-label="Seta">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="4,12 12,4 12,9 20,9 20,15 12,15 12,20" />
+                                </svg>
+                            </button>
+                            
+                            <footer class="shape-submenu-footer">
+                                <button id="more-shapes" type="button">Mais formas</button>
+                            </footer>
+                        </div>
+                    </div>
+                </section>
+                
+                <div class="divider" role="separator" aria-hidden="true"></div>
+                
+                <!-- Ferramentas de arquivo -->
+                <section class="file-tools" aria-label="Ferramentas de arquivo">
+                    <button 
+                        class="tool" 
+                        id="save-map" 
+                        title="Salvar mapa mental"
+                        aria-label="Salvar mapa"
+                        type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        class="tool" 
+                        id="load-map" 
+                        title="Carregar mapa mental"
+                        aria-label="Carregar mapa"
+                        type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        class="tool" 
+                        id="export-image" 
+                        title="Exportar como imagem"
+                        aria-label="Exportar imagem"
+                        type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z" />
+                        </svg>
+                    </button>
+                </section>
+            </nav>
+        </aside>
+        
+        <!-- Área principal do mapa mental -->
+        <main class="content">
+            <div 
+                id="mind-map-container" 
+                role="application" 
+                aria-label="Área do mapa mental interativo"
+                tabindex="0">
+                
+                <!-- Mensagem exibida quando não há nós -->
+                <div class="empty-message" aria-live="polite">
+                    Dê um duplo clique para adicionar o primeiro nó
+                </div>
+            </div>
+            
+            <!-- Painel de personalização (inicialmente oculto) -->
+            <aside 
+                id="customization-panel" 
+                class="customization-panel"
+                role="dialog"
+                aria-labelledby="customization-title"
+                aria-hidden="true"
+                style="display:none;">
+                
+                <header>
+                    <h4 id="customization-title">Personalizar Nós</h4>
+                </header>
+                
+                <form class="customization-form">
+                    <div class="form-group">
+                        <label for="node-color-picker">Cor do nó:</label>
+                        <input 
+                            type="color" 
+                            id="node-color-picker" 
+                            value="#ffffff"
+                            aria-describedby="color-help">
+                        <small id="color-help" class="sr-only">Selecione a cor de fundo do nó</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="node-border-color-picker">Cor da borda:</label>
+                        <input 
+                            type="color" 
+                            id="node-border-color-picker" 
+                            value="#222222"
+                            aria-describedby="border-color-help">
+                        <small id="border-color-help" class="sr-only">Selecione a cor da borda do nó</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="node-font-select">Fonte:</label>
+                        <select id="node-font-select" aria-describedby="font-help">
+                            <option value="Arial">Arial</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Tahoma" selected>Tahoma</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                        </select>
+                        <small id="font-help" class="sr-only">Escolha a fonte do texto do nó</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="node-shape-select">Forma:</label>
+                        <select id="node-shape-select" aria-describedby="shape-help">
+                            <option value="ellipse">Elipse</option>
+                            <option value="box">Retângulo</option>
+                            <option value="circle">Círculo</option>
+                            <option value="diamond">Losango</option>
+                            <option value="star">Estrela</option>
+                            <option value="triangle">Triângulo</option>
+                        </select>
+                        <small id="shape-help" class="sr-only">Escolha a forma do nó</small>
+                    </div>
+                    
+                    <footer class="form-actions">
+                        <button 
+                            id="apply-customization" 
+                            type="button"
+                            class="btn btn-primary">
+                            Aplicar
+                        </button>
+                        <button 
+                            id="close-customization" 
+                            type="button"
+                            class="btn btn-secondary">
+                            Fechar
+                        </button>
+                    </footer>
+                </form>
+            </aside>
+        </main>
+    </div>
+    
+    <!-- Scripts de fallback para browsers sem suporte a módulos ES6 -->
+    <script nomodule>
+        console.warn('Seu navegador não suporta módulos ES6. Algumas funcionalidades podem não funcionar corretamente.');
+    </script>
+</body>
+</html>

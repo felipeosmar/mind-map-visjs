@@ -1,0 +1,298 @@
+/**
+ * @fileoverview Sistema de temas claro/escuro
+ * @description Variáveis CSS e estilos para alternância de tema
+ * @author Sistema de Mapa Mental
+ * @version 1.0.0
+ */
+
+/* ===== VARIÁVEIS DE TEMA ===== */
+
+:root {
+    /* Tema Claro (padrão) */
+    --color-background-main: #ffffff;
+    --color-background-secondary: #f7f7f7;
+    --color-background-sidebar: #ffffff;
+    --color-text-primary: #222222;
+    --color-text-secondary: #666666;
+    --color-text-muted: #aaaaaa;
+    --color-border-light: #e0e0e0;
+    --color-border-medium: #cccccc;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-shadow-strong: rgba(0, 0, 0, 0.2);
+    
+    /* Cores de ação */
+    --color-primary: #4285f4;
+    --color-success: #0f9d58;
+    --color-warning: #f4b400;
+    --color-danger: #db4437;
+    --color-info: #9c27b0;
+    
+    /* Grid do canvas */
+    --grid-color-light: rgba(200, 200, 200, 0.2);
+    --grid-color-medium: rgba(180, 180, 180, 0.25);
+    
+    /* Estados de hover e foco */
+    --color-hover-light: #f0f0f0;
+    --color-hover-medium: #d1d1d1;
+    --color-focus: #4285f4;
+}
+
+/* ===== TEMA ESCURO ===== */
+
+body.dark-theme {
+    /* Backgrounds */
+    --color-background-main: #181a1b;
+    --color-background-secondary: #23272a;
+    --color-background-sidebar: #23272a;
+    
+    /* Textos */
+    --color-text-primary: #f5f6fa;
+    --color-text-secondary: #b0b3b8;
+    --color-text-muted: #8a8d91;
+    
+    /* Bordas */
+    --color-border-light: #3a3a3c;
+    --color-border-medium: #444444;
+    
+    /* Sombras */
+    --color-shadow: rgba(0, 0, 0, 0.3);
+    --color-shadow-strong: rgba(0, 0, 0, 0.5);
+    
+    /* Grid do canvas (adaptado para tema escuro) */
+    --grid-color-light: rgba(100, 100, 100, 0.2);
+    --grid-color-medium: rgba(120, 120, 120, 0.25);
+    
+    /* Estados de hover e foco */
+    --color-hover-light: #2c2e30;
+    --color-hover-medium: #3a3c3e;
+}
+
+/* ===== APLICAÇÃO DAS VARIÁVEIS ===== */
+
+/* Elementos principais */
+body {
+    background-color: var(--color-background-secondary);
+    color: var(--color-text-primary);
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--color-background-sidebar);
+    box-shadow: 2px 0 5px var(--color-shadow);
+}
+
+/* Container do mapa mental */
+#mind-map-container {
+    background-color: var(--color-background-main);
+    background-image: 
+        linear-gradient(to right, var(--grid-color-light) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-color-light) 1px, transparent 1px),
+        linear-gradient(to right, var(--grid-color-medium) 10px, transparent 10px),
+        linear-gradient(to bottom, var(--grid-color-medium) 10px, transparent 10px);
+}
+
+/* Ferramentas da toolbar */
+.tool:hover {
+    background-color: var(--color-hover-light);
+}
+
+.tool:focus {
+    outline-color: var(--color-focus);
+}
+
+/* Botões de tema */
+.theme-toggle-btn {
+    border-color: var(--color-border-medium);
+    background-color: var(--color-background-sidebar);
+    color: var(--color-text-primary);
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--color-hover-medium);
+}
+
+.theme-toggle-btn:focus {
+    outline-color: var(--color-focus);
+}
+
+/* Divisores */
+.divider {
+    background-color: var(--color-border-light);
+}
+
+/* Mensagem de container vazio */
+.empty-message {
+    color: var(--color-text-muted);
+}
+
+/* Indicador central */
+#mind-map-container::after {
+    border-color: var(--color-border-light);
+}
+
+/* ===== SUBMENU DE FORMAS (TEMA ESCURO) ===== */
+
+.shape-submenu {
+    background-color: var(--color-background-main);
+    border: 1px solid var(--color-border-medium);
+    box-shadow: 0 2px 10px var(--color-shadow-strong);
+}
+
+.shape-submenu::before {
+    border-right-color: var(--color-background-main);
+}
+
+.shape-option {
+    border-color: var(--color-border-light);
+}
+
+.shape-option:hover {
+    background-color: var(--color-hover-light);
+    border-color: var(--color-border-medium);
+}
+
+.shape-option svg rect,
+.shape-option svg circle,
+.shape-option svg ellipse,
+.shape-option svg polygon {
+    fill: var(--color-background-main);
+    stroke: var(--color-text-primary);
+}
+
+/* Botão "Mais formas" */
+#more-shapes {
+    background-color: var(--color-hover-light);
+    border-color: var(--color-border-medium);
+    color: var(--color-text-primary);
+}
+
+#more-shapes:hover {
+    background-color: var(--color-hover-medium);
+}
+
+/* ===== PAINEL DE PERSONALIZAÇÃO (TEMA ESCURO) ===== */
+
+#customization-panel {
+    background-color: var(--color-background-main);
+    border-color: var(--color-border-medium);
+    box-shadow: 0 2px 10px var(--color-shadow-strong);
+    color: var(--color-text-primary);
+}
+
+#customization-panel h4 {
+    color: var(--color-text-primary);
+}
+
+#customization-panel label {
+    color: var(--color-text-primary);
+}
+
+#customization-panel select,
+#customization-panel input[type="color"] {
+    background-color: var(--color-background-secondary);
+    border-color: var(--color-border-medium);
+    color: var(--color-text-primary);
+}
+
+#customization-panel button {
+    background-color: var(--color-primary);
+    color: white;
+    border: 1px solid var(--color-primary);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#customization-panel button:hover {
+    background-color: #3367d6;
+}
+
+#customization-panel button:focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+#close-customization {
+    background-color: var(--color-border-medium);
+    color: var(--color-text-primary);
+}
+
+#close-customization:hover {
+    background-color: var(--color-hover-medium);
+}
+
+/* ===== SUBMENU DE CORES (TEMA ESCURO) ===== */
+
+.color-submenu {
+    background-color: var(--color-background-main);
+    box-shadow: 0 2px 10px var(--color-shadow-strong);
+}
+
+.color-submenu::before {
+    border-right-color: var(--color-background-main);
+}
+
+.color-swatch:hover {
+    border-color: var(--color-primary);
+}
+
+.color-swatch:focus {
+    outline-color: var(--color-focus);
+}
+
+/* ===== VIS.JS TEMA ESCURO ===== */
+
+body.dark-theme .vis-tooltip {
+    background-color: var(--color-background-secondary) !important;
+    color: var(--color-text-primary) !important;
+    border: 1px solid var(--color-border-medium) !important;
+}
+
+body.dark-theme .vis-navigation {
+    background: var(--color-background-sidebar) !important;
+    border: 1px solid var(--color-border-medium) !important;
+}
+
+/* ===== TRANSIÇÕES SUAVES PARA MUDANÇA DE TEMA ===== */
+
+body,
+.sidebar,
+.tool,
+.theme-toggle-btn,
+#mind-map-container,
+.shape-submenu,
+.color-submenu,
+#customization-panel {
+    transition: 
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* ===== MODO DE ALTO CONTRASTE ===== */
+
+@media (prefers-contrast: high) {
+    :root {
+        --color-border-light: #000000;
+        --color-border-medium: #000000;
+        --color-shadow: rgba(0, 0, 0, 0.8);
+    }
+    
+    body.dark-theme {
+        --color-border-light: #ffffff;
+        --color-border-medium: #ffffff;
+        --color-shadow: rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* ===== PREFERÊNCIA DE ESQUEMA DE CORES DO SISTEMA ===== */
+
+@media (prefers-color-scheme: dark) {
+    /* Aplicar automaticamente o tema escuro se o usuário preferir */
+    /* Nota: Isso é sobrescrito pelo localStorage, se definido */
+    :root {
+        /* As variáveis já são definidas acima no body.dark-theme */
+    }
+}
